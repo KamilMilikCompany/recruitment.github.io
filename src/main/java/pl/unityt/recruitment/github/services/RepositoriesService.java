@@ -3,12 +3,8 @@ package pl.unityt.recruitment.github.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import pl.unityt.recruitment.github.handlers.RestTemplateErrorHandler;
 import pl.unityt.recruitment.github.models.RepositoriesInfo;
 import pl.unityt.recruitment.github.models.RepositoryParam;
 
@@ -16,9 +12,8 @@ import pl.unityt.recruitment.github.models.RepositoryParam;
 public class RepositoriesService {
 
     private final RestTemplate restTemplate;
-    private final Logger logger = LoggerFactory.getLogger(RestTemplateErrorHandler.class);
-
-
+    private final Logger logger = LoggerFactory.getLogger(RepositoriesService.class);
+    
     @Autowired
     public RepositoriesService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
