@@ -1,5 +1,7 @@
 plugins {
     id("org.springframework.boot") version "2.3.1.RELEASE"
+    id("com.github.johnrengelman.processes") version "0.5.0"
+    id("org.springdoc.openapi-gradle-plugin") version "1.3.0"
     java
 }
 
@@ -24,6 +26,8 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("junit:junit:4.12")
+    implementation("org.springdoc:springdoc-openapi-ui:1.2.33")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
