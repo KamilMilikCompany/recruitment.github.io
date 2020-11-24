@@ -28,6 +28,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("junit:junit:4.12")
     implementation("org.springdoc:springdoc-openapi-ui:1.2.33")
+    implementation("org.modelmapper:modelmapper:2.3.9")
     implementation("org.springframework.boot:spring-boot-starter-security")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

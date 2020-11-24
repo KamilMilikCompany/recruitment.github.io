@@ -10,12 +10,12 @@ import java.io.IOException;
 
 public class RestTemplateErrorHandler extends DefaultResponseErrorHandler {
 
-    private Logger logger = LoggerFactory.getLogger(RestTemplateErrorHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(RestTemplateErrorHandler.class);
 
     @Override
     public void handleError(ClientHttpResponse response) throws IOException {
         if (response.getStatusCode().is4xxClientError() || response.getStatusCode().is5xxServerError()) {
-            logger.error(response.getStatusText());
+            logger.error(response.getStatusText() + " " + response.getStatusCode());
             throw new RestTemplateException(response.getStatusCode(), response.getStatusText());
         }
     }
