@@ -5,11 +5,6 @@ public class RepositoryParam {
     private String owner;
     private String repositoryName;
 
-    public RepositoryParam(String owner, String repositoryName) {
-        this.owner = owner;
-        this.repositoryName = repositoryName;
-    }
-
     public String getOwner() {
         return owner;
     }

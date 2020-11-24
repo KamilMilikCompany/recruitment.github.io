@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.unityt.recruitment.github.models.RepositoriesInfo;
+import pl.unityt.recruitment.github.models.RepositoriesInfoDto;
 import pl.unityt.recruitment.github.models.RepositoryParam;
 import pl.unityt.recruitment.github.services.RepositoriesService;
 
@@ -20,7 +20,7 @@ public class RepositoriesController {
     }
 
     @GetMapping("/repositories/{owner}/{repositoryName}")
-    public ResponseEntity<RepositoriesInfo> repositories(RepositoryParam repositoryParam) {
+    public ResponseEntity<RepositoriesInfoDto> repositories(RepositoryParam repositoryParam) {
         return new ResponseEntity<>(repositoriesService.getRepositoriesInfo(repositoryParam), HttpStatus.OK);
     }
 }

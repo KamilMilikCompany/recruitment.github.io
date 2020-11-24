@@ -1,4 +1,4 @@
-package pl.unityt.recruitment.github.weblayer;
+package pl.unityt.recruitment.github.integration.mockedthirdparty;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import pl.unityt.recruitment.github.controllers.RepositoriesController;
-import pl.unityt.recruitment.github.models.RepositoriesInfo;
+import pl.unityt.recruitment.github.models.RepositoriesInfoDto;
 import pl.unityt.recruitment.github.models.RepositoryParam;
 import pl.unityt.recruitment.github.models.exceptions.ErrorResponse;
 import pl.unityt.recruitment.github.models.exceptions.RestTemplateException;
@@ -36,9 +36,9 @@ public class RepositoriesControllerTest {
     RepositoriesService repositoriesService;
 
     @Test
-    void getRepositoriesReturnsRepositoriesInfoOK() throws Exception {
-        RepositoriesInfo repositoriesInfoExpected = new RepositoriesInfo(repositoryName, "TensorFlow", "https://github.com/apple/tensorflow_macos.git", 39, "2020-11-05T18:47:47Z");
-        Mockito.when(repositoriesService.getRepositoriesInfo(any(RepositoryParam.class))).thenReturn(repositoriesInfoExpected);
+    void getRepositories_ShouldReturnsRepositoryOkStatus_WhenRepositoryExist() throws Exception {
+        RepositoriesInfoDto repositoriesInfoDtoExpected = new RepositoriesInfoDto(repositoryName, "TensorFlow", "https://github.com/apple/tensorflow_macos.git", 39, "2020-11-05T18:47:47Z");
+        Mockito.when(repositoriesService.getRepositoriesInfo(any(RepositoryParam.class))).thenReturn(repositoriesInfoDtoExpected);
 
         MvcResult mvcResult = this.mockMvc.perform(get("/repositories/{owner}/{repositoryName}", owner, repositoryName)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -47,11 +47,11 @@ public class RepositoriesControllerTest {
                 .andReturn();
         String actualResponseBody = mvcResult.getResponse().getContentAsString();
 
-        assertThat(actualResponseBody).isEqualToIgnoringWhitespace(objectMapper.writeValueAsString(repositoriesInfoExpected));
+        assertThat(actualResponseBody).isEqualToIgnoringWhitespace(objectMapper.writeValueAsString(repositoriesInfoDtoExpected));
     }
 
     @Test
-    void getRepositoriesInfoReturnsClientException() throws Exception {
+    void getRepositories_ShouldReturnsClientException_WhenRepositoryNotExist() throws Exception {
         String path = "/repositories/" + owner + "/" + repositoryName;
         RestTemplateException expectedRestTemplateException = new RestTemplateException(HttpStatus.NOT_FOUND, "NOT FOUND");
         ErrorResponse expectedErrorResponse = new ErrorResponse(expectedRestTemplateException, path);
@@ -69,7 +69,7 @@ public class RepositoriesControllerTest {
     }
 
     @Test
-    void getRepositoriesInfoReturnsServerException() throws Exception {
+    void getRepositories_ShouldReturnsServerException_WhenServerHasInternalError() throws Exception {
         String path = "/repositories/" + owner + "/" + repositoryName;
         RestTemplateException expectedRestTemplateException = new RestTemplateException(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL SERVER ERROR");
         ErrorResponse expectedErrorResponse = new ErrorResponse(expectedRestTemplateException, path);
